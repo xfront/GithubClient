@@ -2,13 +2,15 @@ package com.ddmeng.githubclient.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.model.Endpoints;
 import com.ddmeng.githubclient.network.GitHubService;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -17,21 +19,21 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView result;
+    @BindView(R.id.result)
+    TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        View testButton = findViewById(R.id.send);
-        result = (TextView) findViewById(R.id.result);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        ButterKnife.bind(this);
 
-                getAllEndpoints();
-            }
-        });
+        result.setText("hello");
+    }
+
+    @OnClick(R.id.send)
+    void testButtonClicked() {
+        getAllEndpoints();
     }
 
     private void getAllEndpoints() {
