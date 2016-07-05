@@ -19,11 +19,15 @@ android {
         }
     }
 }
+ext {
+    supportLibVersion = '24.0.0'  // variable that can be referenced to keep support libs consistent
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
     compile 'javax.annotation:jsr250-api:1.0'
     compile 'com.google.dagger:dagger:2.5'
     apt 'com.google.dagger:dagger-compiler:2.5'

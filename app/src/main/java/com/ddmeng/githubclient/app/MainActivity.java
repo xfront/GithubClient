@@ -2,7 +2,7 @@ package com.ddmeng.githubclient.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.model.Endpoints;
@@ -10,7 +10,6 @@ import com.ddmeng.githubclient.network.GitHubService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -19,19 +18,19 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.result)
-    TextView result;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        result.setText("hello");
+        setSupportActionBar(toolbar);
     }
 
-    @OnClick(R.id.send)
+
     void testButtonClicked() {
         getAllEndpoints();
     }
@@ -46,13 +45,11 @@ public class MainActivity extends AppCompatActivity {
         endpoints.enqueue(new Callback<Endpoints>() {
             @Override
             public void onResponse(Call<Endpoints> call, Response<Endpoints> response) {
-                result.setText(response.body().toString());
 
             }
 
             @Override
             public void onFailure(Call<Endpoints> call, Throwable t) {
-                result.setText(t.getMessage());
 
             }
         });
