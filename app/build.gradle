@@ -11,6 +11,10 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "CLIENT_ID", "\"4de89037de8143f162f2\""
+        buildConfigField "String", "CLIENT_SECRET", "\"a8f8d3f12f84db354aaf04388fd2c73712648dd6\""
+        buildConfigField "String", "CALLBACK_URL", "\"https://github.com/\""
     }
     buildTypes {
         release {
