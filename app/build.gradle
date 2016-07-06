@@ -15,6 +15,11 @@ android {
         buildConfigField "String", "CLIENT_ID", "\"4de89037de8143f162f2\""
         buildConfigField "String", "CLIENT_SECRET", "\"a8f8d3f12f84db354aaf04388fd2c73712648dd6\""
         buildConfigField "String", "CALLBACK_URL", "\"https://github.com/\""
+
+        def authorities = applicationId + '.provider'
+        def account_type = applicationId + '.account'
+        resValue 'string', 'authorities', authorities
+        resValue 'string', 'account_type', account_type
     }
     buildTypes {
         release {

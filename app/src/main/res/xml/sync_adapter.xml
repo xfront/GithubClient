@@ -1,0 +1,8 @@
+<!--if we only need update data with auth upload, we might need to set "userVisible=false" to hide our sync account-->
+<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accountType="@string/account_type"
+    android:allowParallelSyncs="false"
+    android:contentAuthority="@string/authorities"
+    android:isAlwaysSyncable="true"
+    android:supportsUploading="false"
+    android:userVisible="true" />
