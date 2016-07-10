@@ -1,7 +1,20 @@
 package com.ddmeng.githubclient.module;
 
-import dagger.Module;
+import android.content.Context;
 
-@Module
+import dagger.Module;
+import dagger.Provides;
+
+@Module(includes = {AndroidServiceModule.class})
 public class MainModule {
+    private Context context;
+
+    public MainModule(Context context) {
+        this.context = context;
+    }
+
+    @Provides
+    public Context provideContext() {
+        return context;
+    }
 }

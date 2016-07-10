@@ -20,6 +20,9 @@ android {
         def account_type = applicationId + '.account'
         resValue 'string', 'authorities', authorities
         resValue 'string', 'account_type', account_type
+
+        buildConfigField "String", "AUTHORITIES", "\"${authorities}\""
+        buildConfigField "String", "ACCOUNT_TYPE", "\"${account_type}\""
     }
     buildTypes {
         release {

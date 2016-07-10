@@ -9,9 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ddmeng.githubclient.R;
+import com.ddmeng.githubclient.account.AccountUtil;
 import com.ddmeng.githubclient.model.Endpoints;
 import com.ddmeng.githubclient.network.GitHubService;
 import com.ddmeng.githubclient.network.ServiceGenerator;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,11 +31,16 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
+    @Inject
+    AccountUtil accountUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ((GithubClientApplication) getApplication()).getComponent().inject(this);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -42,10 +50,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
+                switch (item.getItemId()) {
+                    case R.id.nav_sign_in:
+                        accountUtil.signIn(MainActivity.this);
+                }
                 return true;
             }
         });
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
