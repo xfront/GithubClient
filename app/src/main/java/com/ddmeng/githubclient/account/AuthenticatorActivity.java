@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.ddmeng.githubclient.BuildConfig;
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.app.GithubClientApplication;
 
@@ -41,5 +42,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     @OnClick(R.id.btn_sign_in)
     void submitSignIn() {
 
+        RequestAccessDialog dialog = RequestAccessDialog.show(BuildConfig.CLIENT_ID, BuildConfig.CALLBACK_URL);
+        dialog.show(getFragmentManager(), RequestAccessDialog.TAG);
     }
 }
