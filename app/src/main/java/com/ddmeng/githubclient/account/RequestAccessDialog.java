@@ -85,7 +85,7 @@ public class RequestAccessDialog extends DialogFragment {
                 LogUtils.i(TAG, "code: " + urls[1]);
 //                mListener.onComplete(urls[1]);
 //                RequestAccessDialog.this.dismiss();
-                return true;
+                return false;
             }
             return false;
         }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="@dimen/request_access_dialog_width"
+    android:layout_height="@dimen/request_access_dialog_height"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,5 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
+
 
 </LinearLayout>
