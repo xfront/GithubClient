@@ -1,14 +1,29 @@
 package com.ddmeng.githubclient.network;
 
+import com.ddmeng.githubclient.model.AccessTokenResponse;
+
+import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface OAuthService {
 
     String BASE_URL = "https://github.com/login/oauth/";
 
+
+    @FormUrlEncoded
+    @Headers({"Accept: application/json"})
     @POST("access_token")
-    void getAccessToken(@Field("client_id") String clientId, @Field("client_secret") String clientSecret,
-                        @Field("code") String code, @Field("redirect_uri") String redirectUri, @Field("state")
-                        String state);
+    Call<AccessTokenResponse> getAccessToken(@Field("client_id") String clientId, @Field("client_secret") String clientSecret,
+                                             @Field("code") String code);
+
+
+    @FormUrlEncoded
+    @Headers({"Accept: application/json"})
+    @POST("access_token")
+    Call<AccessTokenResponse> getAccessToken(@Field("client_id") String clientId, @Field("client_secret") String clientSecret,
+                                             @Field("code") String code, @Field("redirect_uri") String redirectUri, @Field("state")
+                                             String state);
 }

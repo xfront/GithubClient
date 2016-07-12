@@ -8,12 +8,19 @@ import android.widget.TextView;
 import com.ddmeng.githubclient.BuildConfig;
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.app.GithubClientApplication;
+import com.ddmeng.githubclient.model.AccessTokenResponse;
+import com.ddmeng.githubclient.network.OAuthService;
+import com.ddmeng.githubclient.network.ServiceGenerator;
+import com.ddmeng.githubclient.utils.LogUtils;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
@@ -43,6 +50,27 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     void submitSignIn() {
 
         RequestAccessDialog dialog = RequestAccessDialog.show(BuildConfig.CLIENT_ID, BuildConfig.CALLBACK_URL);
+        dialog.setCallback(new RequestAccessDialog.RequestAccessCallback() {
+            @Override
+            public void onCompleted(String code) {
+                ServiceGenerator.changeApiBaseUrl(OAuthService.BASE_URL);
+                OAuthService oauthService = ServiceGenerator.createService(OAuthService.class);
+                Call<AccessTokenResponse> callToGetAccessToken = oauthService.getAccessToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code);
+
+                callToGetAccessToken.enqueue(new Callback<AccessTokenResponse>() {
+                    @Override
+                    public void onResponse(Call<AccessTokenResponse> call, Response<AccessTokenResponse> response) {
+                        AccessTokenResponse res = response.body();
+                        LogUtils.i(TAG, "get access token response: " + res.getAccessToken());
+                    }
+
+                    @Override
+                    public void onFailure(Call<AccessTokenResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         dialog.show(getFragmentManager(), RequestAccessDialog.TAG);
     }
 }

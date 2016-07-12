@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
+import android.text.TextUtils;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -24,10 +25,18 @@ import butterknife.ButterKnife;
 public class RequestAccessDialog extends DialogFragment {
     public static final String TAG = RequestAccessDialog.class.getSimpleName();
 
+    public interface RequestAccessCallback {
+        void onCompleted(String code);
+    }
+
     private static final String URL_REQUEST_ACCESS = "https://github.com/login/oauth/authorize";
     private static final String CLIENT_ID = "CLIENT_ID";
     private static final String REDIRECT_URI = "REDIRECT_URI";
     private static final String SCOPE = "SCOPE";
+
+    private CodeParser codeParser;
+    private RequestAccessCallback callback;
+
 
     @BindView(R.id.webview)
     WebView webView;
@@ -54,8 +63,14 @@ public class RequestAccessDialog extends DialogFragment {
         dialog.setContentView(R.layout.dialog_request_access);
         ButterKnife.bind(this, dialog);
         initWebView();
+        codeParser = new CodeParser();
         return dialog;
     }
+
+    public void setCallback(RequestAccessCallback callback) {
+        this.callback = callback;
+    }
+
 
     private void initWebView() {
         webView.setWebViewClient(new OAuthWebViewClient());
@@ -81,12 +96,18 @@ public class RequestAccessDialog extends DialogFragment {
             LogUtils.d(TAG, "Redirecting URL " + url);
 
             if (url.startsWith(BuildConfig.CALLBACK_URL)) {
-                String urls[] = url.split("=");
-                LogUtils.i(TAG, "code: " + urls[1]);
-//                mListener.onComplete(urls[1]);
-//                RequestAccessDialog.this.dismiss();
+                String code = codeParser.parseCode(url);
+                LogUtils.i(TAG, "code: " + code);
+                if (!TextUtils.isEmpty(code)) {
+                    RequestAccessDialog.this.dismiss();
+                    if (callback != null) {
+                        callback.onCompleted(code);
+                    }
+                }
+
                 return false;
             }
+
             return false;
         }
 
