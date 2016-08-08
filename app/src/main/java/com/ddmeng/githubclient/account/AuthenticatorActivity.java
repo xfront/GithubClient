@@ -17,7 +17,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,12 +28,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     public static final String PARAM_USERNAME = "username";
     public static final String PARAM_AUTH_TOKEN_TYPE = "auth_token_type";
 
-
-    @BindView(R.id.input_username)
-    TextView username;
-    @BindView(R.id.input_password)
-    TextView password;
-
     @Inject
     AccountManager accountManager;
 
@@ -44,10 +37,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         setContentView(R.layout.activity_login);
         ((GithubClientApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
+        showSignIn();
     }
 
-    @OnClick(R.id.btn_sign_in)
-    void submitSignIn() {
+    private void showSignIn() {
 
         RequestAccessDialog dialog = RequestAccessDialog.show(BuildConfig.CLIENT_ID, BuildConfig.CALLBACK_URL);
         dialog.setCallback(new RequestAccessDialog.RequestAccessCallback() {
