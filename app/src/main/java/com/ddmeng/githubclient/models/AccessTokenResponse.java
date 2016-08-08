@@ -1,4 +1,4 @@
-package com.ddmeng.githubclient.model;
+package com.ddmeng.githubclient.models;
 
 
 import com.google.gson.annotations.Expose;

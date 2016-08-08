@@ -3,19 +3,17 @@ package com.ddmeng.githubclient.account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.ddmeng.githubclient.BuildConfig;
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.app.GithubClientApplication;
-import com.ddmeng.githubclient.model.AccessTokenResponse;
+import com.ddmeng.githubclient.models.AccessTokenResponse;
 import com.ddmeng.githubclient.network.OAuthService;
 import com.ddmeng.githubclient.network.ServiceGenerator;
 import com.ddmeng.githubclient.utils.LogUtils;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +61,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
                     }
                 });
+                ServiceGenerator.changeApiBaseUrl(ServiceGenerator.GITHUB_API_BASE_URL);
             }
         });
         dialog.show(getFragmentManager(), RequestAccessDialog.TAG);

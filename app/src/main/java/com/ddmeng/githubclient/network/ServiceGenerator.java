@@ -10,7 +10,8 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 
 public class ServiceGenerator {
-    public static String apiBaseUrl = "https://api.github.com";
+    public static final String GITHUB_API_BASE_URL = "https://api.github.com";
+    private static String apiBaseUrl = GITHUB_API_BASE_URL;
 
     private static OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
@@ -41,7 +42,7 @@ public class ServiceGenerator {
                         .header("Content-Type", "application/json")
                         .method(original.method(), original.body());
                 if (authToken != null) {
-                    requestBuilder.header("Authorization", authToken);
+                    requestBuilder.header("Authorization", "token " + authToken);
                 }
                 Request request = requestBuilder.build();
                 return chain.proceed(request);

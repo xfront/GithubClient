@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
-import com.ddmeng.githubclient.model.Endpoints;
+import com.ddmeng.githubclient.models.Endpoints;
 import com.ddmeng.githubclient.network.GitHubService;
 import com.ddmeng.githubclient.network.ServiceGenerator;
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void getAllEndpoints() {
 
         GitHubService gitHubService = ServiceGenerator.createService(GitHubService.class);
-        Call<Endpoints> endpoints = gitHubService.getEndpoints("");
+        Call<Endpoints> endpoints = gitHubService.getAllEndpoints("");
         endpoints.enqueue(new Callback<Endpoints>() {
             @Override
             public void onResponse(Call<Endpoints> call, Response<Endpoints> response) {
