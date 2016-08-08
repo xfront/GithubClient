@@ -53,6 +53,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
                 callToGetAccessToken.enqueue(new Callback<AccessTokenResponse>() {
                     @Override
                     public void onResponse(Call<AccessTokenResponse> call, Response<AccessTokenResponse> response) {
+                        LogUtils.d(TAG, "response message: " + response.message());
                         AccessTokenResponse res = response.body();
                         LogUtils.i(TAG, "get access token response: " + res.getAccessToken());
                     }

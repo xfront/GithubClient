@@ -14,14 +14,12 @@ public interface OAuthService {
 
 
     @FormUrlEncoded
-    @Headers({"Accept: application/json"})
     @POST("access_token")
     Call<AccessTokenResponse> getAccessToken(@Field("client_id") String clientId, @Field("client_secret") String clientSecret,
                                              @Field("code") String code);
 
 
     @FormUrlEncoded
-    @Headers({"Accept: application/json"})
     @POST("access_token")
     Call<AccessTokenResponse> getAccessToken(@Field("client_id") String clientId, @Field("client_secret") String clientSecret,
                                              @Field("code") String code, @Field("redirect_uri") String redirectUri, @Field("state")
