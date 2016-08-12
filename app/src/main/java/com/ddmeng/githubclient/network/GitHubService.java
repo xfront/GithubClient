@@ -13,6 +13,6 @@ public interface GitHubService {
     @GET
     Call<Endpoints> getAllEndpoints(@Url String url);
 
-    @GET
+    @GET("user")
     Call<User> getCurrentUser();
 }

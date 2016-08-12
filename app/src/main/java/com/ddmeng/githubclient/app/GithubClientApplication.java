@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ddmeng.githubclient.component.DaggerMainComponent;
 import com.ddmeng.githubclient.component.MainComponent;
 import com.ddmeng.githubclient.module.MainModule;
+import com.ddmeng.githubclient.utils.PreferencesUtils;
 
 public class GithubClientApplication extends Application {
 
@@ -16,6 +17,8 @@ public class GithubClientApplication extends Application {
         component = DaggerMainComponent.builder()
                 .mainModule(new MainModule(this))
                 .build();
+
+        PreferencesUtils.setContext(this);
     }
 
     public MainComponent getComponent() {

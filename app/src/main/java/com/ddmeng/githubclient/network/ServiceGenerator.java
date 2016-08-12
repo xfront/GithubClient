@@ -10,7 +10,7 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 
 public class ServiceGenerator {
-    public static final String GITHUB_API_BASE_URL = "https://api.github.com";
+    public static final String GITHUB_API_BASE_URL = "https://api.github.com/";
     private static String apiBaseUrl = GITHUB_API_BASE_URL;
 
     private static OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
