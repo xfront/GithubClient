@@ -20,7 +20,7 @@ allprojects {
 }
 
 ext {
-    supportLibVersion = '25.0.0'  // variable that can be referenced to keep support libs consistent
+    supportLibVersion = '25.0.1'  // variable that can be referenced to keep support libs consistent
     daggerVersion = '2.7'
     butterKnifeVersion = '8.4.0'
 }
