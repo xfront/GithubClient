@@ -1,8 +1,7 @@
-package com.ddmeng.githubclient.component;
+package com.ddmeng.githubclient.injection;
 
 import com.ddmeng.githubclient.account.AuthenticatorActivity;
 import com.ddmeng.githubclient.app.MainActivity;
-import com.ddmeng.githubclient.module.MainModule;
 
 import javax.inject.Singleton;
 

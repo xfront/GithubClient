@@ -10,9 +10,9 @@ import android.view.MenuItem;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
-import com.ddmeng.githubclient.models.Endpoints;
-import com.ddmeng.githubclient.network.GitHubService;
-import com.ddmeng.githubclient.network.ServiceGenerator;
+import com.ddmeng.githubclient.data.models.Endpoints;
+import com.ddmeng.githubclient.remote.GitHubService;
+import com.ddmeng.githubclient.remote.ServiceGenerator;
 
 import javax.inject.Inject;
 

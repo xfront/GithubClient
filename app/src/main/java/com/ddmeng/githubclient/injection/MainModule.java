@@ -1,4 +1,4 @@
-package com.ddmeng.githubclient.module;
+package com.ddmeng.githubclient.injection;
 
 import android.content.Context;
 

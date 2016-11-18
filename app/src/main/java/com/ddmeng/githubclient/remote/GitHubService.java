@@ -1,7 +1,7 @@
-package com.ddmeng.githubclient.network;
+package com.ddmeng.githubclient.remote;
 
-import com.ddmeng.githubclient.models.Endpoints;
-import com.ddmeng.githubclient.models.User;
+import com.ddmeng.githubclient.data.models.Endpoints;
+import com.ddmeng.githubclient.data.models.User;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

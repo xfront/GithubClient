@@ -8,9 +8,9 @@ import android.os.Bundle;
 import com.ddmeng.githubclient.BuildConfig;
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.app.GithubClientApplication;
-import com.ddmeng.githubclient.models.AccessTokenResponse;
-import com.ddmeng.githubclient.network.OAuthService;
-import com.ddmeng.githubclient.network.ServiceGenerator;
+import com.ddmeng.githubclient.data.models.AccessTokenResponse;
+import com.ddmeng.githubclient.remote.OAuthService;
+import com.ddmeng.githubclient.remote.ServiceGenerator;
 import com.ddmeng.githubclient.utils.LogUtils;
 
 import javax.inject.Inject;

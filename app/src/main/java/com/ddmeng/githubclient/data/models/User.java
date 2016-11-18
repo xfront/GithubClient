@@ -1,4 +1,4 @@
-package com.ddmeng.githubclient.models;
+package com.ddmeng.githubclient.data.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

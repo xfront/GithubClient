@@ -1,6 +1,6 @@
-package com.ddmeng.githubclient.network;
+package com.ddmeng.githubclient.remote;
 
-import com.ddmeng.githubclient.models.AccessTokenResponse;
+import com.ddmeng.githubclient.data.models.AccessTokenResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

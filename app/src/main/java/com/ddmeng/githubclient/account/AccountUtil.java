@@ -9,9 +9,9 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.ddmeng.githubclient.BuildConfig;
-import com.ddmeng.githubclient.models.User;
-import com.ddmeng.githubclient.network.GitHubService;
-import com.ddmeng.githubclient.network.ServiceGenerator;
+import com.ddmeng.githubclient.data.models.User;
+import com.ddmeng.githubclient.remote.GitHubService;
+import com.ddmeng.githubclient.remote.ServiceGenerator;
 import com.ddmeng.githubclient.utils.LogUtils;
 import com.ddmeng.githubclient.utils.PreferencesUtils;
 

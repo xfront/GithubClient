@@ -1,4 +1,4 @@
-package com.ddmeng.githubclient.network;
+package com.ddmeng.githubclient.remote;
 
 import java.io.IOException;
 
