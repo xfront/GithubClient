@@ -16,9 +16,9 @@ import com.ddmeng.githubclient.utils.LogUtils;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
@@ -44,35 +44,34 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     }
 
     private void showSignIn() {
-
         RequestAccessDialog dialog = RequestAccessDialog.show(BuildConfig.CLIENT_ID, BuildConfig.CALLBACK_URL);
         dialog.setCallback(new RequestAccessDialog.RequestAccessCallback() {
             @Override
             public void onCompleted(String code) {
                 ServiceGenerator.changeApiBaseUrl(OAuthService.BASE_URL);
                 OAuthService oauthService = ServiceGenerator.createService(OAuthService.class);
-                Call<AccessTokenResponse> callToGetAccessToken = oauthService.getAccessToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code);
+                oauthService.getAccessToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<AccessTokenResponse>() {
+                            @Override
+                            public void onCompleted() {
+                                ServiceGenerator.changeApiBaseUrl(ServiceGenerator.GITHUB_API_BASE_URL);
+                            }
 
-                callToGetAccessToken.enqueue(new Callback<AccessTokenResponse>() {
-                    @Override
-                    public void onResponse(Call<AccessTokenResponse> call, Response<AccessTokenResponse> response) {
-                        LogUtils.d(TAG, "response message: " + response.message());
-                        AccessTokenResponse res = response.body();
-                        LogUtils.i(TAG, "get access token response: " + res.getAccessToken());
+                            @Override
+                            public void onError(Throwable e) {
 
-                        resultBundle = new Bundle();
+                            }
 
-                        resultBundle.putString(AccountManager.KEY_ACCOUNT_TYPE, BuildConfig.ACCOUNT_TYPE);
-                        resultBundle.putString(PARAM_TOKEN, res.getAccessToken());
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<AccessTokenResponse> call, Throwable t) {
-
-                    }
-                });
-                ServiceGenerator.changeApiBaseUrl(ServiceGenerator.GITHUB_API_BASE_URL);
+                            @Override
+                            public void onNext(AccessTokenResponse accessTokenResponse) {
+                                LogUtils.i(TAG, "get access token response: " + accessTokenResponse.getAccessToken());
+                                resultBundle = new Bundle();
+                                resultBundle.putString(AccountManager.KEY_ACCOUNT_TYPE, BuildConfig.ACCOUNT_TYPE);
+                                resultBundle.putString(PARAM_TOKEN, accessTokenResponse.getAccessToken());
+                            }
+                        });
             }
         });
         dialog.show(getFragmentManager(), RequestAccessDialog.TAG);

@@ -19,9 +19,9 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AccountUtil {
     private static final String TAG = AccountUtil.class.getSimpleName();
@@ -63,18 +63,25 @@ public class AccountUtil {
 
         GitHubService gitHubService = ServiceGenerator.createService(GitHubService.class, getAccessToken());
         LogUtils.i(TAG, "token: " + getAccessToken());
-        Call<User> currentUser = gitHubService.getCurrentUser();
-        currentUser.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                LogUtils.i(TAG, "response: " + response.message());
-                LogUtils.i(TAG, "get current user: " + response.body().getName());
-            }
+        gitHubService.getCurrentUser()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<User>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(User user) {
+                        LogUtils.i(TAG, "get current user: " + user.getName());
+                    }
+                });
+
     }
 }

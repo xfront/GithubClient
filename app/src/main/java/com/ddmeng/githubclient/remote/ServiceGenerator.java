@@ -7,24 +7,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
     public static final String GITHUB_API_BASE_URL = "https://api.github.com/";
-    private static String apiBaseUrl = GITHUB_API_BASE_URL;
 
     private static OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-            .baseUrl(apiBaseUrl)
-            .addConverterFactory(GsonConverterFactory.create());
+            .baseUrl(GITHUB_API_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
     public static void changeApiBaseUrl(String newApiBaseUrl) {
-        apiBaseUrl = newApiBaseUrl;
-
-        retrofitBuilder = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(apiBaseUrl);
+        retrofitBuilder = retrofitBuilder.baseUrl(newApiBaseUrl);
     }
 
     public static <S> S createService(Class<S> serviceClass) {

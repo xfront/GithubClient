@@ -6,6 +6,7 @@ import com.ddmeng.githubclient.data.models.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
+import rx.Observable;
 
 
 public interface GitHubService {
@@ -14,5 +15,5 @@ public interface GitHubService {
     Call<Endpoints> getAllEndpoints(@Url String url);
 
     @GET("user")
-    Call<User> getCurrentUser();
+    Observable<User> getCurrentUser();
 }
