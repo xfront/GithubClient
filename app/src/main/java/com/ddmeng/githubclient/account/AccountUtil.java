@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.ddmeng.githubclient.BuildConfig;
+import com.ddmeng.githubclient.data.models.AccessTokenResponse;
 import com.ddmeng.githubclient.data.models.User;
 import com.ddmeng.githubclient.remote.GitHubService;
 import com.ddmeng.githubclient.remote.ServiceGenerator;
@@ -18,15 +19,17 @@ import com.ddmeng.githubclient.utils.PreferencesUtils;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import rx.Observable;
+import rx.functions.Func1;
 
+@Singleton
 public class AccountUtil {
     private static final String TAG = AccountUtil.class.getSimpleName();
 
     private AccountManager accountManager;
+    private User currentUser;
 
     @Inject
     public AccountUtil(AccountManager accountManager) {
@@ -59,29 +62,38 @@ public class AccountUtil {
         PreferencesUtils.saveAccessToken(accessToken);
     }
 
-    private void getUserInformation() {
+    public boolean isSignedIn() {
+        return currentUser != null;
+    }
 
-        GitHubService gitHubService = ServiceGenerator.createService(GitHubService.class, getAccessToken());
-        LogUtils.i(TAG, "token: " + getAccessToken());
-        gitHubService.getCurrentUser()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<User>() {
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public Observable.Transformer<AccessTokenResponse, User> getUserInformation() {
+        return new Observable.Transformer<AccessTokenResponse, User>() {
+            @Override
+            public Observable<User> call(Observable<AccessTokenResponse> accessTokenResponseObservable) {
+                return accessTokenResponseObservable.map(new Func1<AccessTokenResponse, String>() {
                     @Override
-                    public void onCompleted() {
-
+                    public String call(AccessTokenResponse accessTokenResponse) {
+                        String accessToken = accessTokenResponse.getAccessToken();
+                        saveAccessToken(accessToken);
+                        return accessToken;
                     }
-
+                }).flatMap(new Func1<String, Observable<User>>() {
                     @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(User user) {
-                        LogUtils.i(TAG, "get current user: " + user.getName());
+                    public Observable<User> call(String accessToken) {
+                        ServiceGenerator.changeApiBaseUrl(ServiceGenerator.GITHUB_API_BASE_URL);
+                        GitHubService gitHubService = ServiceGenerator.createService(GitHubService.class, accessToken);
+                        return gitHubService.getCurrentUser();
                     }
                 });
-
+            }
+        };
     }
 }

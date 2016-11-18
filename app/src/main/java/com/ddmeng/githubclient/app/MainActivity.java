@@ -7,22 +7,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
-import com.ddmeng.githubclient.data.models.Endpoints;
-import com.ddmeng.githubclient.remote.GitHubService;
-import com.ddmeng.githubclient.remote.ServiceGenerator;
+import com.ddmeng.githubclient.app.home.HomeContract;
+import com.ddmeng.githubclient.app.home.HomePresenter;
+import com.ddmeng.githubclient.data.models.User;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HomeContract.View {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -31,8 +30,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
+
     @Inject
     AccountUtil accountUtil;
+
+    private HomeContract.Presenter presenter;
+    private TextView userInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         ((GithubClientApplication) getApplication()).getComponent().inject(this);
+        new HomePresenter(this, accountUtil);
+        presenter.start();
+    }
 
+    @Override
+    public void setPresenter(HomeContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void initActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public void initDrawerMenu() {
+        View headerView = navigationView.getHeaderView(0);
+        userInformation = (TextView) headerView.findViewById(R.id.user_information);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -57,9 +75,23 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.updateSignInState();
+    }
+
+    @Override
+    public void showUserInformation(User currentUser) {
+        userInformation.setText(currentUser.getName());
+    }
+
+    @Override
+    public void showSignInButton() {
+        userInformation.setText(R.string.sign_in);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,24 +103,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void testButtonClicked() {
-        getAllEndpoints();
-    }
-
-    private void getAllEndpoints() {
-
-        GitHubService gitHubService = ServiceGenerator.createService(GitHubService.class);
-        Call<Endpoints> endpoints = gitHubService.getAllEndpoints("");
-        endpoints.enqueue(new Callback<Endpoints>() {
-            @Override
-            public void onResponse(Call<Endpoints> call, Response<Endpoints> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Endpoints> call, Throwable t) {
-
-            }
-        });
-    }
 }

@@ -2,8 +2,8 @@
     <string name="app_name">GithubClient</string>
     <string name="test">Test</string>
 
-    <!--Login-->
-    <string name="user_name">User Name</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="sign_in">Sign In</string>
+    <string name="home">Home</string>
+    <string name="friends">Friends</string>
+    <string name="notifications">Notifications</string>
 </resources>

@@ -9,9 +9,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
+        android:id="@+id/user_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User Information"
+        android:text="@string/sign_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </LinearLayout>
