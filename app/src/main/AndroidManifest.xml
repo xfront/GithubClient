@@ -48,7 +48,8 @@
             android:exported="false"
             android:syncable="true" />
 
-        <activity android:name=".account.AuthenticatorActivity"></activity>
+        <activity android:name=".account.AuthenticatorActivity" />
+        <activity android:name=".app.me.MeActivity"></activity>
     </application>
 
 </manifest>
