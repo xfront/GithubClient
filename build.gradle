@@ -5,8 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:2.2.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -20,8 +19,8 @@ allprojects {
 }
 
 ext {
-    supportLibVersion = '25.0.1'  // variable that can be referenced to keep support libs consistent
-    daggerVersion = '2.7'
+    supportLibVersion = '25.1.0'  // variable that can be referenced to keep support libs consistent
+    daggerVersion = '2.8'
     butterKnifeVersion = '8.4.0'
 }
 
