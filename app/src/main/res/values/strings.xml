@@ -6,4 +6,20 @@
     <string name="home">Home</string>
     <string name="friends">Friends</string>
     <string name="notifications">Notifications</string>
+
+    <string name="input_hint_username">Username</string>
+    <string name="get_user_information">Get User Information</string>
+    <string name="user_not_found">User not found!</string>
+    <string name="user_name">Name: %s</string>
+    <string name="user_email">Email: %s</string>
+    <string name="user_public_repos">Public Repos: %d</string>
+    <string name="user_following">Following: %d</string>
+    <string name="user_followers">Followers: %d</string>
+
+    <string name="get_user_repos">Get User Repos</string>
+
+    <string name="get_user_following">Get User Following</string>
+    <string name="get_repo_statistics">Get Repo Statistics</string>
+    <string name="user_login_name">%s</string>
+    <string name="loading_message">Loading ...</string>
 </resources>
