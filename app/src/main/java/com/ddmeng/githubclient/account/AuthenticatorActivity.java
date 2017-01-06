@@ -7,8 +7,7 @@ import android.os.Bundle;
 
 import com.ddmeng.githubclient.BuildConfig;
 import com.ddmeng.githubclient.R;
-import com.ddmeng.githubclient.app.GithubClientApplication;
-import com.ddmeng.githubclient.data.models.AccessTokenResponse;
+import com.ddmeng.githubclient.app.GitHubApplication;
 import com.ddmeng.githubclient.data.models.User;
 import com.ddmeng.githubclient.remote.OAuthService;
 import com.ddmeng.githubclient.remote.ServiceGenerator;
@@ -17,7 +16,6 @@ import com.ddmeng.githubclient.utils.LogUtils;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -42,7 +40,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ((GithubClientApplication) getApplication()).getComponent().inject(this);
+        ((GitHubApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
         showSignIn();
         accountAuthenticatorResponse = getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);

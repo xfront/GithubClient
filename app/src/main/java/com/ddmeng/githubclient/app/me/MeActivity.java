@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
-import com.ddmeng.githubclient.app.GithubClientApplication;
+import com.ddmeng.githubclient.app.GitHubApplication;
 import com.ddmeng.githubclient.app.home.HomeListAdapter;
 import com.ddmeng.githubclient.data.models.Repo;
 
@@ -33,7 +33,7 @@ public class MeActivity extends AppCompatActivity implements MeContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
         ButterKnife.bind(this);
-        accountUtil = ((GithubClientApplication) getApplication()).getComponent().getAccountUtil();
+        accountUtil = ((GitHubApplication) getApplication()).getComponent().getAccountUtil();
         new MePresenter(this, accountUtil);
         presenter.start();
 

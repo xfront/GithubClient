@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements HomeContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        ((GithubClientApplication) getApplication()).getComponent().inject(this);
+        ((GitHubApplication) getApplication()).getComponent().inject(this);
         new HomePresenter(this, accountUtil);
         presenter.start();
     }

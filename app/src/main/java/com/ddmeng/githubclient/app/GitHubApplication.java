@@ -7,7 +7,7 @@ import com.ddmeng.githubclient.injection.MainComponent;
 import com.ddmeng.githubclient.injection.MainModule;
 import com.ddmeng.githubclient.utils.PreferencesUtils;
 
-public class GithubClientApplication extends Application {
+public class GitHubApplication extends Application {
 
     private MainComponent component;
 
