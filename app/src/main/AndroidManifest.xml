@@ -49,7 +49,6 @@
             android:syncable="true" />
 
         <activity android:name=".account.AuthenticatorActivity" />
-        <activity android:name=".app.me.MeActivity"></activity>
     </application>
 
 </manifest>

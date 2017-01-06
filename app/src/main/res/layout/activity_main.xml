@@ -22,13 +22,14 @@
                 app:layout_scrollFlags="scroll|enterAlways" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/main_content_list"
+        <FrameLayout
+            android:id="@+id/content_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 
     <!--DrawerLayout's second child, the menu child-->
     <android.support.design.widget.NavigationView

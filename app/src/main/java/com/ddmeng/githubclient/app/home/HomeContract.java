@@ -11,8 +11,6 @@ public interface HomeContract {
 
         void initActionBar();
 
-        void initMainList();
-
         void showUserInformation(User currentUser);
 
         void showSignInButton();

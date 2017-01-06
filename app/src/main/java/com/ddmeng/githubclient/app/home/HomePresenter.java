@@ -17,7 +17,6 @@ public class HomePresenter implements HomeContract.Presenter {
     public void start() {
         view.initActionBar();
         view.initDrawerMenu();
-        view.initMainList();
     }
 
     @Override

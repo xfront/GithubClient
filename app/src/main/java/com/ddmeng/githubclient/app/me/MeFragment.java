@@ -1,11 +1,13 @@
 package com.ddmeng.githubclient.app.me;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
@@ -18,9 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MeActivity extends AppCompatActivity implements MeContract.View {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class MeFragment extends Fragment implements MeContract.View {
     @BindView(R.id.main_content_list)
     RecyclerView mainContentList;
 
@@ -28,16 +28,21 @@ public class MeActivity extends AppCompatActivity implements MeContract.View {
     private MeContract.Presenter presenter;
     private HomeListAdapter mainListAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_me);
-        ButterKnife.bind(this);
-        accountUtil = ((GitHubApplication) getApplication()).getComponent().getAccountUtil();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_me, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        accountUtil = ((GitHubApplication) getActivity().getApplication()).getComponent().getAccountUtil();
         new MePresenter(this, accountUtil);
         presenter.start();
-
     }
+
 
     @Override
     public void setPresenter(MeContract.Presenter presenter) {
@@ -46,10 +51,7 @@ public class MeActivity extends AppCompatActivity implements MeContract.View {
 
     @Override
     public void initViews() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mainContentList.setLayoutManager(new LinearLayoutManager(this));
+        mainContentList.setLayoutManager(new LinearLayoutManager(getContext()));
         mainListAdapter = new HomeListAdapter();
         mainContentList.setAdapter(mainListAdapter);
     }
@@ -58,15 +60,5 @@ public class MeActivity extends AppCompatActivity implements MeContract.View {
     public void showRepos(List<Repo> repos) {
         mainListAdapter.setRepoList(repos);
         mainListAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,22 +1,22 @@
 package com.ddmeng.githubclient.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
 import com.ddmeng.githubclient.app.home.HomeContract;
 import com.ddmeng.githubclient.app.home.HomePresenter;
-import com.ddmeng.githubclient.app.me.MeActivity;
+import com.ddmeng.githubclient.app.me.MeFragment;
 import com.ddmeng.githubclient.data.models.User;
 
 import javax.inject.Inject;
@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements HomeContract.View
     Toolbar toolbar;
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
-    @BindView(R.id.main_content_list)
-    RecyclerView mainContentList;
+    @BindView(R.id.content_container)
+    FrameLayout contentContainer;
 
     @Inject
     AccountUtil accountUtil;
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements HomeContract.View
                         accountUtil.signIn(MainActivity.this);
                         break;
                     case R.id.nav_me:
-                        startActivity(new Intent(MainActivity.this, MeActivity.class));
+                        showFragment(new MeFragment());
                         break;
                 }
                 return true;
@@ -85,9 +85,8 @@ public class MainActivity extends AppCompatActivity implements HomeContract.View
         });
     }
 
-    @Override
-    public void initMainList() {
-
+    private void showFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_container, fragment).commit();
     }
 
     @Override
