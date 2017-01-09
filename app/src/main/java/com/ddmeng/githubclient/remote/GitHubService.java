@@ -1,6 +1,7 @@
 package com.ddmeng.githubclient.remote;
 
 import com.ddmeng.githubclient.data.models.Endpoints;
+import com.ddmeng.githubclient.data.models.Event;
 import com.ddmeng.githubclient.data.models.Repo;
 import com.ddmeng.githubclient.data.models.User;
 
@@ -26,4 +27,7 @@ public interface GitHubService {
 
     @GET("users/{user}/following")
     Observable<List<User>> getUserFollowingObservable(@Path("user") String user);
+
+    @GET("users/{user}/received_events")
+    Observable<List<Event>> getReceivedEvents(@Path("user") String user);
 }

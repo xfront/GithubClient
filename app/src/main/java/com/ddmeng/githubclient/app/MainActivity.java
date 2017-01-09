@@ -17,6 +17,7 @@ import com.ddmeng.githubclient.account.AccountUtil;
 import com.ddmeng.githubclient.app.home.HomeContract;
 import com.ddmeng.githubclient.app.home.HomePresenter;
 import com.ddmeng.githubclient.app.me.MeFragment;
+import com.ddmeng.githubclient.app.news.NewsFragment;
 import com.ddmeng.githubclient.data.models.User;
 
 import javax.inject.Inject;
@@ -78,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements HomeContract.View
                         break;
                     case R.id.nav_me:
                         showFragment(new MeFragment());
+                        break;
+                    case R.id.nav_news:
+                        showFragment(new NewsFragment());
                         break;
                 }
                 return true;

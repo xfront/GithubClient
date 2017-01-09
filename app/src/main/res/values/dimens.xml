@@ -11,4 +11,5 @@
     <dimen name="repo_name_text_size">20sp</dimen>
     <dimen name="repo_description_text_size">16sp</dimen>
     <dimen name="user_name_text_size">18sp</dimen>
+    <dimen name="event_text_margin_horizontal">4dp</dimen>
 </resources>

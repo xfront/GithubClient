@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.ddmeng.githubclient.R;
 import com.ddmeng.githubclient.account.AccountUtil;
 import com.ddmeng.githubclient.app.GitHubApplication;
-import com.ddmeng.githubclient.app.home.HomeListAdapter;
 import com.ddmeng.githubclient.data.models.Repo;
 
 import java.util.List;
@@ -26,12 +25,12 @@ public class MeFragment extends Fragment implements MeContract.View {
 
     private AccountUtil accountUtil;
     private MeContract.Presenter presenter;
-    private HomeListAdapter mainListAdapter;
+    private RepoListAdapter mainListAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_me, container, false);
+        return inflater.inflate(R.layout.me_fragment_layout, container, false);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class MeFragment extends Fragment implements MeContract.View {
     @Override
     public void initViews() {
         mainContentList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mainListAdapter = new HomeListAdapter();
+        mainListAdapter = new RepoListAdapter();
         mainContentList.setAdapter(mainListAdapter);
     }
 

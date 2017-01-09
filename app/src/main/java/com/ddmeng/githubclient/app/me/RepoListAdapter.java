@@ -1,4 +1,4 @@
-package com.ddmeng.githubclient.app.home;
+package com.ddmeng.githubclient.app.me;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,10 +11,10 @@ import com.ddmeng.githubclient.data.models.Repo;
 
 import java.util.List;
 
-public class HomeListAdapter extends RecyclerView.Adapter<RepoViewHolder> {
+public class RepoListAdapter extends RecyclerView.Adapter<RepoViewHolder> {
     private List<Repo> repoList;
 
-    public HomeListAdapter() {
+    public RepoListAdapter() {
     }
 
     public void setRepoList(List<Repo> repoList) {
